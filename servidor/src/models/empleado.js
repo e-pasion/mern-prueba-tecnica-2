@@ -1,7 +1,6 @@
 import {DataTypes } from "sequelize";
 import { sequelize } from "../config/db.js";
-import AREA from "./area.js";
-import ROL from "./rol.js";
+import { createRelaciones } from "../config/relaciones.js";
 
 const EMPLEADO= sequelize.define("empleados",{
     nombre:{
@@ -26,20 +25,8 @@ const EMPLEADO= sequelize.define("empleados",{
         notNull:false
     }
 })
-EMPLEADO.belongsTo(AREA);
-AREA.hasOne(EMPLEADO);
 
 
-EMPLEADO.belongsToMany(ROL, {
-    through: "empleado_rol",
-    as: "roles",
-    foreignKey: "rol_id",
-  });
 
-  ROL.belongsToMany(EMPLEADO, {
-    through: "empleado_rol",
-    as: "empleados",
-    foreignKey: "empleado_id",
-  });
 
 export default EMPLEADO;
